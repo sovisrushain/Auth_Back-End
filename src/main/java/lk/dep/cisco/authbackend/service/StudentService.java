@@ -35,7 +35,7 @@ public class StudentService {
 
     }
 
-    public List getAllStudents(){
+    public List<StudentDTO> getAllStudents(){
         List<StudentDTO> students = new ArrayList<>();
         try {
             Statement stm = connection.createStatement();
