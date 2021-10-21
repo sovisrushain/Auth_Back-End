@@ -1,5 +1,6 @@
 package lk.dep.cisco.authbackend.api;
 
+import jakarta.annotation.Resource;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.servlet.*;
@@ -8,7 +9,6 @@ import jakarta.servlet.annotation.*;
 import lk.dep.cisco.authbackend.dto.UserDTO;
 import lk.dep.cisco.authbackend.service.UserService;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
@@ -28,6 +28,7 @@ public class UserServlet extends HttpServlet {
         }
         try {
             UserDTO userDTO = JsonbBuilder.create().fromJson(req.getReader(), UserDTO.class);
+
             if (userDTO.getUsername() == null || userDTO.getUsername().trim().length() < 3) {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid username");
                 return;

@@ -1,5 +1,6 @@
 package lk.dep.cisco.authbackend.api;
 
+import jakarta.annotation.Resource;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -8,13 +9,12 @@ import lk.dep.cisco.authbackend.dto.UserDTO;
 import lk.dep.cisco.authbackend.security.SecurityContext;
 import lk.dep.cisco.authbackend.service.UserService;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet(name = "AuthServlet", value = "/authenticate")
+@WebServlet(name = "AuthServlet", value = "/authenticate", loadOnStartup = 0)
 public class AuthServlet extends HttpServlet {
 
     @Resource(name = "java:comp/env/jdbc/cp")
@@ -28,7 +28,6 @@ public class AuthServlet extends HttpServlet {
         }
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-
         if (username == null || password == null){
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Bad login credentials");
             return;

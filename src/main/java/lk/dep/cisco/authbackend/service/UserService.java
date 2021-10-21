@@ -14,29 +14,30 @@ public class UserService {
 
     public void saveUser(UserDTO user){
         try {
-            PreparedStatement stm = connection.prepareStatement("INSERT INTO user VALUES (?,?,?)");
+            PreparedStatement stm = connection.prepareStatement("INSERT INTO user VALUES (?, ?, ?)");
             stm.setString(1, user.getUsername());
             stm.setString(2, user.getFullName());
             stm.setString(3, user.getPassword());
-
-            if(stm.executeUpdate() != 1){
-                throw new RuntimeException("Failed to save the user.");
+            if (stm.executeUpdate() != 1){
+                throw new RuntimeException("Failed to save the user");
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     public UserDTO authenticate(String username, String password){
         try {
             Statement stm = connection.createStatement();
-            String sql = String.format("SELECT full_name FROM user WHERE username=%s AND password=%s", username, password);
+            String sql = String.format("SELECT full_name FROM user WHERE username='%s' AND password='%s'", username, password);
             ResultSet rst = stm.executeQuery(sql);
-            if(rst.next()){
+            if (rst.next()){
                 return new UserDTO(username, password, rst.getString("full_name"));
             }
-            throw new RuntimeException("Invalid logIn credentials");
+            throw new RuntimeException("Invalid login credentials");
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException("Failed to authenticate", e);
         }
     }

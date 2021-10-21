@@ -1,5 +1,6 @@
 package lk.dep.cisco.authbackend.api;
 
+import jakarta.annotation.Resource;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.json.bind.JsonbException;
 import jakarta.servlet.*;
@@ -10,9 +11,7 @@ import lk.dep.cisco.authbackend.security.SecurityContext;
 import lk.dep.cisco.authbackend.service.StudentService;
 import lk.dep.cisco.authbackend.service.UserService;
 
-import javax.annotation.Resource;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
+
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
